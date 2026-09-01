@@ -1,0 +1,552 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Sweet Science — Understanding Boxing</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Source+Serif+4:opsz,wght@8..60,400;8..60,500;8..60,600;8..60,700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:      #17130f;
+    --canvas:   #efe8dc;
+    --canvas-2: #e4dac8;
+    --leather:  #5c3a26;
+    --red:      #9c1c22;
+    --red-2:    #c22a2a;
+    --gold:     #b8912f;
+    --max: 1120px;
+  }
+  *{box-sizing:border-box; margin:0; padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    font-family:'Inter', sans-serif;
+    color: var(--ink);
+    background: var(--canvas);
+    line-height:1.62;
+    font-size:17px;
+  }
+  h1,h2,h3,h4{
+    font-family:'Bebas Neue', sans-serif;
+    font-weight:400;
+    letter-spacing:0.015em;
+    color: var(--ink);
+  }
+  .serif{ font-family:'Source Serif 4', serif; }
+  a{ color:inherit; }
+  img{ display:block; max-width:100%; }
+  .wrap{ max-width: var(--max); margin:0 auto; padding:0 28px; }
+
+  /* ---------- NAV ---------- */
+  header.site{
+    position: sticky; top:0; z-index:50;
+    background: var(--ink);
+    border-bottom: 3px solid var(--red);
+  }
+  .navbar{
+    max-width: var(--max); margin:0 auto; padding: 14px 28px;
+    display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{
+    font-family:'Bebas Neue', sans-serif; font-size:1.5rem;
+    color: var(--canvas); display:flex; align-items:center; gap:10px; letter-spacing:0.03em;
+  }
+  .brand .dot{ width:9px; height:9px; border-radius:50%; background: var(--red-2); }
+  nav.links{ display:flex; gap: 26px; }
+  nav.links a{
+    color: #cfc4b0; text-decoration:none; font-size:0.9rem;
+    font-family:'Inter', sans-serif; font-weight:500;
+    padding: 4px 2px; border-bottom: 2px solid transparent; transition: border-color .2s, color .2s;
+  }
+  nav.links a:hover{ color:#fff; border-color: var(--red-2); }
+  .nav-toggle{ display:none; background:none; border:none; color:#fff; font-size:1.6rem; cursor:pointer; }
+
+  /* ---------- HERO (poster style) ---------- */
+  .hero{
+    position:relative; min-height: 94vh; display:flex; align-items:center;
+    background: var(--ink); overflow:hidden;
+  }
+  .hero img{
+    position:absolute; inset:0; width:100%; height:100%; object-fit:cover;
+    object-position: center 38%; opacity:0.55; filter: grayscale(35%) contrast(1.05);
+  }
+  .hero::before{
+    content:""; position:absolute; inset:0;
+    background: radial-gradient(ellipse at 50% 30%, rgba(23,19,15,0.15) 0%, rgba(23,19,15,0.75) 65%, rgba(23,19,15,0.97) 100%);
+  }
+  .hero-content{
+    position:relative; z-index:2; width:100%;
+    padding: 120px 28px 0; max-width: var(--max); margin:0 auto;
+  }
+  .hero-kicker{
+    color: var(--gold); font-family:'Inter',sans-serif; font-weight:600; font-size:0.82rem;
+    letter-spacing: 0.14em; margin-bottom:20px;
+  }
+  .hero h1{
+    color:#f5efe2; font-size: clamp(3.4rem, 10vw, 7.6rem); line-height:0.88;
+  }
+  .hero-sub{
+    font-family:'Source Serif 4', serif; color: #d8ccb6; max-width: 560px; margin-top:26px; font-size:1.15rem;
+  }
+  .fight-card{
+    display:flex; flex-wrap:wrap; margin-top: 56px;
+    border-top: 1px solid rgba(245,239,226,0.28);
+  }
+  .fight-card div{
+    flex:1; min-width:150px; padding: 20px 22px 40px;
+    border-right: 1px dashed rgba(245,239,226,0.28);
+  }
+  .fight-card div:last-child{ border-right:none; }
+  .fight-card .num{
+    font-family:'Bebas Neue',sans-serif; color: var(--gold); font-size:2.3rem; line-height:1;
+  }
+  .fight-card .label{ color: #b7ab93; font-size:0.78rem; margin-top:6px; }
+
+  /* ---------- SECTION GENERIC ---------- */
+  section{ padding: 100px 0; }
+  .section-head{ max-width: 640px; margin-bottom: 46px; }
+  .section-head .tag{
+    color: var(--red); font-family:'Inter',sans-serif; font-weight:600; font-size:0.78rem;
+    letter-spacing:0.1em; margin-bottom:12px; display:block;
+  }
+  .section-head h2{ font-size: clamp(2.2rem, 5vw, 3.2rem); }
+  .lede{
+    font-family:'Source Serif 4', serif; font-size:1.2rem; color:#3a2f24;
+    max-width: 620px; line-height:1.6;
+  }
+  p.body-text{ max-width: 600px; color:#463a2d; }
+  p + p.body-text{ margin-top:14px; }
+
+  /* ---------- INTRO — image LEFT this time ---------- */
+  .intro{ background: var(--canvas); }
+  .intro-grid{
+    display:grid; grid-template-columns: 0.85fr 1.15fr; gap:60px; align-items:start;
+  }
+  .intro-grid img{ border-radius:2px; width:100%; height:560px; object-fit:cover; }
+
+  /* ---------- HISTORY — pull-quote narrative, not a dot timeline ---------- */
+  .history{ background: var(--ink); color: var(--canvas); }
+  .history .section-head h2{ color:#fff; }
+  .history .lede{ color: #cfc4b0; }
+  .history-body{ display:grid; grid-template-columns: 1.3fr 0.9fr; gap: 60px; margin-top:20px;}
+  .history-body p{ color:#cfc4b0; max-width:560px; }
+  .history-body p + p{ margin-top:16px; }
+  .pull-quote{
+    border-left: 3px solid var(--gold); padding: 6px 0 6px 26px;
+    align-self:start; position: sticky; top: 110px;
+  }
+  .pull-quote p{
+    font-family:'Source Serif 4', serif; font-style:italic; color:#f5efe2; font-size:1.35rem; line-height:1.5;
+  }
+  .pull-quote span{ display:block; margin-top:14px; color: var(--gold); font-family:'Inter',sans-serif; font-size:0.82rem; letter-spacing:0.05em; }
+
+  /* ---------- FEATURE BAND ---------- */
+  .band{ position:relative; height: 58vh; min-height:400px; background: var(--ink); }
+  .band img{ width:100%; height:100%; object-fit:cover; opacity:0.92; }
+  .band-caption{
+    position:absolute; left:0; right:0; bottom:0;
+    padding: 30px 0; background: linear-gradient(180deg, transparent, rgba(23,19,15,0.88));
+  }
+  .band-caption p{
+    color: var(--gold); font-family:'Inter',sans-serif; font-weight:600; font-size:0.85rem; letter-spacing:0.08em;
+  }
+
+  /* ---------- WEIGHT CLASSES & ROUNDS ---------- */
+  .rounds{ background: var(--canvas-2); }
+  .rounds-layout{ display:grid; grid-template-columns: 1fr 1fr; gap:60px; }
+  .round-ticket{
+    display:flex; align-items:baseline; gap:18px; padding: 18px 0;
+    border-bottom: 1px dashed #b8ab90;
+  }
+  .round-ticket:first-of-type{ border-top: 1px dashed #b8ab90; }
+  .round-ticket .r-num{
+    font-family:'Bebas Neue',sans-serif; font-size:2.1rem; color: var(--red); min-width:64px;
+  }
+  .round-ticket .r-desc{ color:#463a2d; font-size:0.95rem; }
+  .weight-list{ columns: 2; column-gap: 30px; margin-top:8px; }
+  .weight-list div{
+    break-inside: avoid; padding: 10px 0; border-bottom: 1px solid #d3c6ac; font-size:0.92rem;
+  }
+  .weight-list .w-name{ font-weight:600; color:var(--ink); }
+  .weight-list .w-limit{ color:#6b5c46; display:block; font-size:0.82rem; margin-top:2px;}
+
+  /* ---------- PUNCHES — asymmetric feature grid, distinct from hockey's row list ---------- */
+  .punches{ background: var(--canvas); }
+  .punch-grid{
+    display:grid; grid-template-columns: repeat(4, 1fr); gap: 2px;
+    background: var(--ink); margin-top:48px;
+  }
+  .punch-card{
+    background: var(--canvas); padding: 34px 24px; min-height: 220px;
+    display:flex; flex-direction:column; justify-content:space-between;
+  }
+  .punch-card .p-name{ font-family:'Bebas Neue',sans-serif; font-size:1.7rem; color: var(--red); }
+  .punch-card p{ font-size:0.9rem; color:#463a2d; margin-top:14px; }
+
+  /* ---------- GALLERY — uniform 3-col grid, distinct from hockey's asymmetric mosaic ---------- */
+  .gallery{ background: var(--ink); }
+  .gallery .section-head h2{ color:#fff; }
+  .gallery .lede{ color:#cfc4b0; }
+  .gallery-grid{
+    margin-top: 46px; display:grid; grid-template-columns: repeat(3, 1fr); gap:16px;
+  }
+  .gallery-grid figure{ overflow:hidden; background:#000; aspect-ratio: 4/5; }
+  .gallery-grid img{ width:100%; height:100%; object-fit:cover; filter:grayscale(20%); transition: transform .5s ease, filter .5s ease; }
+  .gallery-grid a:hover img{ transform: scale(1.05); filter:grayscale(0%); }
+
+  /* ---------- SCORING ---------- */
+  .scoring{ background: var(--canvas-2); }
+  .scoring-grid{ display:grid; grid-template-columns: 1fr 1fr 1fr; gap: 1px; background:#b8ab90; margin-top:46px; }
+  .scoring-item{ background: var(--canvas-2); padding: 30px 26px; }
+  .scoring-item h3{ font-size:1.3rem; }
+  .scoring-item p{ font-size:0.92rem; color:#463a2d; margin-top:10px; }
+
+  /* ---------- GEAR — image right, alternating list, distinct from hockey's uniform 6-grid ---------- */
+  .gear{ background: var(--canvas); }
+  .gear-layout{ display:grid; grid-template-columns: 1fr 0.8fr; gap:60px; align-items:center; }
+  .gear-list dt{ font-family:'Bebas Neue',sans-serif; font-size:1.35rem; color:var(--ink); margin-top:26px; }
+  .gear-list dt:first-child{ margin-top:0; }
+  .gear-list dd{ color:#463a2d; margin-top:4px; max-width:480px; font-size:0.95rem; }
+  .gear-layout img{ width:100%; height:520px; object-fit:cover; border-radius:2px; }
+
+  /* ---------- TODAY ---------- */
+  .today{ background: var(--ink); color:#f5efe2; }
+  .today .section-head h2{ color:#fff; }
+  .today .lede{ color:#cfc4b0; }
+  .today-grid{ display:flex; flex-direction:column; margin-top:44px; }
+  .today-row{
+    display:grid; grid-template-columns: 220px 1fr; gap:30px;
+    padding: 24px 0; border-top: 1px solid rgba(245,239,226,0.15);
+  }
+  .today-row:last-child{ border-bottom: 1px solid rgba(245,239,226,0.15); }
+  .today-row .t-name{ font-family:'Bebas Neue',sans-serif; font-size:1.3rem; color:#f5efe2; }
+  .today-row .t-detail{ color:#cfc4b0; max-width:560px; font-size:0.95rem; }
+
+  /* ---------- FOOTER ---------- */
+  footer{ background: #0f0c09; color: #a99a80; padding: 56px 0 34px; font-size:0.88rem; }
+  .footer-grid{ display:flex; justify-content:space-between; flex-wrap:wrap; gap:30px; }
+  footer .brand{ margin-bottom:14px; color:#f5efe2; }
+  footer .col h4{ color:#f5efe2; font-size:0.82rem; font-weight:600; margin-bottom:10px; font-family:'Inter',sans-serif; letter-spacing:0.06em;}
+  footer .col a{ display:block; color: #a99a80; text-decoration:none; margin-bottom:7px; }
+  footer .col a:hover{ color:#fff; }
+  .footer-bottom{
+    margin-top: 44px; padding-top: 22px; border-top:1px solid rgba(245,239,226,0.1);
+    display:flex; justify-content:space-between; flex-wrap:wrap; gap:10px; color:#6b5f4e;
+  }
+
+  /* ---------- RESPONSIVE ---------- */
+  @media (max-width: 860px){
+    nav.links{ display:none; }
+    .nav-toggle{ display:block; }
+    .intro-grid, .rounds-layout, .history-body, .gear-layout{ grid-template-columns: 1fr; gap:36px; }
+    .pull-quote{ position:static; }
+    .punch-grid{ grid-template-columns: repeat(2, 1fr); }
+    .scoring-grid{ grid-template-columns: 1fr; }
+    .gallery-grid{ grid-template-columns: repeat(2, 1fr); }
+    .today-row{ grid-template-columns: 1fr; gap:6px; }
+    .weight-list{ columns: 1; }
+    .intro-grid img{ height:340px; }
+    .gear-layout img{ height:340px; order:-1; }
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    html{ scroll-behavior:auto; }
+    .gallery-grid img{ transition:none; }
+  }
+
+  :focus-visible{ outline: 2px solid var(--gold); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<header class="site">
+  <div class="navbar">
+    <div class="brand"><span class="dot"></span> THE SWEET SCIENCE</div>
+    <nav class="links">
+      <a href="#intro">The Sport</a>
+      <a href="#history">History</a>
+      <a href="#rounds">Rounds &amp; Weight</a>
+      <a href="#punches">Punches</a>
+      <a href="#gear">Gear</a>
+      <a href="#today">Today</a>
+    </nav>
+    <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('nav.links').classList.toggle('open')">☰</button>
+  </div>
+</header>
+
+<section class="hero">
+  <img src="https://images.unsplash.com/photo-1726867825984-0582b27728b8?auto=format&fit=crop&w=1920&q=80" alt="Two boxers sparring inside a ring, gloves raised in a defensive guard">
+  <div class="hero-content">
+    <p class="hero-kicker">A GUIDE TO BOXING</p>
+    <h1>Twelve rounds.<br>Two fighters.<br>No excuses.</h1>
+    <p class="hero-sub">Boxing is often called the sweet science — a sport where footwork, timing, and endurance matter as much as raw power. Here's how the fight actually works, from the first bell to the final decision.</p>
+    <div class="fight-card">
+      <div><div class="num">12</div><div class="label">rounds in a championship bout</div></div>
+      <div><div class="num">3 min</div><div class="label">length of a professional round</div></div>
+      <div><div class="num">17</div><div class="label">recognised weight classes</div></div>
+      <div><div class="num">1867</div><div class="label">year gloved rules were codified</div></div>
+    </div>
+  </div>
+</section>
+
+<section class="intro" id="intro">
+  <div class="wrap intro-grid">
+    <div>
+      <img src="https://images.unsplash.com/photo-1732440290061-9a1af022c442?auto=format&fit=crop&w=900&q=80" alt="A boxer training on a punching bag in a gym">
+    </div>
+    <div>
+      <div class="section-head">
+        <span class="tag">THE SPORT</span>
+        <h2>A fight decided by more than power</h2>
+      </div>
+      <p class="lede">Two fighters, matched by weight, try to land clean punches while avoiding their opponent's — using nothing but gloves, footwork, and a well-timed guard.</p>
+      <p class="body-text">Despite its reputation for brute force, boxing rewards patience and precision over wild swinging. Judges score rounds on effective aggression, defence, and ring generalship — meaning a fighter who controls distance and lands the cleaner shots often wins over one who simply throws more punches.</p>
+      <p class="body-text">A bout can end three ways: by decision after the final bell, by knockout (KO) when a fighter can't beat a ten-count, or by technical knockout (TKO) when a referee or a fighter's own corner stops the contest to prevent further, unnecessary punishment.</p>
+    </div>
+  </div>
+</section>
+
+<section class="history" id="history">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag" style="color:#e08a8a;">ORIGINS</span>
+      <h2>From bare knuckles to the modern ring</h2>
+    </div>
+    <div class="history-body">
+      <div>
+        <p>Fist-fighting as organised sport dates back to ancient Greece, where boxing was part of the Olympic Games from 688 BCE, fought with leather thongs wrapped around the hands instead of gloves.</p>
+        <p>The modern sport took shape in 18th-century England. In 1743, champion fighter Jack Broughton wrote the first formal rules after an opponent died in the ring, introducing a 30-second count for a downed fighter and banning blows below the belt — ideas that still shape the sport today.</p>
+        <p>The version most people would recognise arrived in 1867 with the Marquess of Queensberry rules, which mandated padded gloves, three-minute rounds with a minute's rest, and a ten-second count for a knockout. Under these rules, "Gentleman" Jim Corbett beat John L. Sullivan in 1892 to become the first heavyweight champion of the gloved era.</p>
+        <p>Boxing has been part of the Olympics continuously since 1904, and women's boxing was added to the Olympic programme at London 2012, more than a century after the men's competition began.</p>
+      </div>
+      <div class="pull-quote">
+        <p>"Boxing is the only sport where two men, matched almost to the pound, go looking for each other's weakness in full view of a crowd."</p>
+        <span>ON THE SPORT'S APPEAL</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="band">
+  <img src="https://images.unsplash.com/photo-1575747515871-2e323827539e?auto=format&fit=crop&w=1800&q=80" alt="An empty boxing ring lit before a match, ropes and canvas visible">
+  <div class="band-caption"><div class="wrap"><p>A REGULATION RING MEASURES BETWEEN 16 AND 20 FEET PER SIDE, INSIDE THE ROPES</p></div></div>
+</div>
+
+<section class="rounds" id="rounds">
+  <div class="wrap rounds-layout">
+    <div>
+      <div class="section-head">
+        <span class="tag">STRUCTURE</span>
+        <h2>How a bout is timed</h2>
+      </div>
+      <p class="body-text" style="margin-bottom:8px;">Professional title fights run up to 12 three-minute rounds, with a one-minute rest between each. Non-championship bouts are often shorter, and amateur and Olympic-style boxing uses three or four rounds of two or three minutes.</p>
+      <div class="round-ticket">
+        <div class="r-num">R1–3</div>
+        <div class="r-desc">Fighters typically feel out range, jab, and study each other's rhythm before committing to bigger exchanges.</div>
+      </div>
+      <div class="round-ticket">
+        <div class="r-num">R4–8</div>
+        <div class="r-desc">The midpoint of a long fight, where fatigue starts to show and fighters look to establish control on the scorecards.</div>
+      </div>
+      <div class="round-ticket">
+        <div class="r-num">R9–12</div>
+        <div class="r-desc">The championship rounds — the stretch that separates a title fight from a shorter bout, testing conditioning as much as skill.</div>
+      </div>
+    </div>
+    <div>
+      <div class="section-head">
+        <span class="tag">MATCHMAKING</span>
+        <h2>Weight classes</h2>
+      </div>
+      <p class="body-text" style="margin-bottom:10px;">Fighters are matched within strict weight limits so that size is never the deciding factor. The major professional divisions, from lightest to heaviest, include:</p>
+      <div class="weight-list">
+        <div><span class="w-name">Minimumweight</span><span class="w-limit">up to 105 lb</span></div>
+        <div><span class="w-name">Flyweight</span><span class="w-limit">up to 112 lb</span></div>
+        <div><span class="w-name">Bantamweight</span><span class="w-limit">up to 118 lb</span></div>
+        <div><span class="w-name">Featherweight</span><span class="w-limit">up to 126 lb</span></div>
+        <div><span class="w-name">Lightweight</span><span class="w-limit">up to 135 lb</span></div>
+        <div><span class="w-name">Welterweight</span><span class="w-limit">up to 147 lb</span></div>
+        <div><span class="w-name">Middleweight</span><span class="w-limit">up to 160 lb</span></div>
+        <div><span class="w-name">Light heavyweight</span><span class="w-limit">up to 175 lb</span></div>
+        <div><span class="w-name">Cruiserweight</span><span class="w-limit">up to 200 lb</span></div>
+        <div><span class="w-name">Heavyweight</span><span class="w-limit">no upper limit</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="punches" id="punches">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">TECHNIQUE</span>
+      <h2>The four punches everything is built from</h2>
+      <p class="lede">Nearly every combination in boxing is some sequence of four basic punches, each thrown from a different angle and for a different purpose.</p>
+    </div>
+    <div class="punch-grid">
+      <div class="punch-card">
+        <div class="p-name">Jab</div>
+        <p>Thrown with the lead hand, straight from the guard. Fast and low-power, used to measure distance and set up bigger punches.</p>
+      </div>
+      <div class="punch-card">
+        <div class="p-name">Cross</div>
+        <p>A straight power punch from the rear hand, travelling in a direct line — often the hardest punch a fighter throws.</p>
+      </div>
+      <div class="punch-card">
+        <div class="p-name">Hook</div>
+        <p>A sweeping punch thrown with a bent arm, travelling sideways toward the opponent's head or body from either hand.</p>
+      </div>
+      <div class="punch-card">
+        <div class="p-name">Uppercut</div>
+        <p>Thrown upward from a lowered position, aimed under the opponent's guard at the chin or body at close range.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="scoring">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag">JUDGING</span>
+      <h2>How a fight is scored</h2>
+      <p class="lede">Professional bouts that go the distance are scored on the 10-point must system, applied round by round.</p>
+    </div>
+    <div class="scoring-grid">
+      <div class="scoring-item">
+        <h3>10–9</h3>
+        <p>The standard scorecard for a close round — the winner gets 10 points, the other fighter 9.</p>
+      </div>
+      <div class="scoring-item">
+        <h3>10–8</h3>
+        <p>Awarded when a fighter dominates a round or scores a knockdown, widening the points gap.</p>
+      </div>
+      <div class="scoring-item">
+        <h3>10–10</h3>
+        <p>A genuinely even round, scored equally — rare, since judges are trained to find a slight edge.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="gallery">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag" style="color:#e08a8a;">GALLERY</span>
+      <h2>Inside the ring</h2>
+    </div>
+    <div class="gallery-grid">
+      <figure>
+        <a href="https://unsplash.com/photos/a-couple-of-men-standing-in-a-boxing-ring-QPd3g4xFfGc" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1726867825984-0582b27728b8?auto=format&fit=crop&w=700&q=80" alt="Two boxers sparring in a ring">
+        </a>
+      </figure>
+      <figure>
+        <a href="https://unsplash.com/photos/two-men-about-to-fight-inside-boxing-ring-ODqEpFhcfpE" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1542459629-519887d476da?auto=format&fit=crop&w=700&q=80" alt="A referee checking a boxer before a bout under dramatic lighting">
+        </a>
+      </figure>
+      <figure>
+        <a href="https://unsplash.com/photos/a-man-standing-in-a-gym-with-a-punching-bag-u7ppUufeVLo" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1732440290061-9a1af022c442?auto=format&fit=crop&w=700&q=80" alt="A boxer training on a heavy bag">
+        </a>
+      </figure>
+      <figure>
+        <a href="https://unsplash.com/photos/a-pair-of-boxing-gloves-hanging-from-a-hook-cjE8onriPtE" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1670768457987-f78bc97df50c?auto=format&fit=crop&w=700&q=80" alt="A pair of red boxing gloves hanging from a hook">
+        </a>
+      </figure>
+      <figure>
+        <a href="https://unsplash.com/photos/brown-and-gray-boxing-stage-o2zrjlM5s5o" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1575747515871-2e323827539e?auto=format&fit=crop&w=700&q=80" alt="An empty boxing ring before a match">
+        </a>
+      </figure>
+      <figure>
+        <a href="https://unsplash.com/photos/a-man-standing-in-a-gym-with-a-punching-bag-u7ppUufeVLo" target="_blank" rel="noopener">
+          <img src="https://images.unsplash.com/photo-1732440290061-9a1af022c442?auto=format&fit=crop&w=700&q=80&sat=-100" alt="A boxer in mid-training session, monochrome">
+        </a>
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="gear" id="gear">
+  <div class="wrap gear-layout">
+    <div>
+      <div class="section-head">
+        <span class="tag">EQUIPMENT</span>
+        <h2>What's actually in the corner</h2>
+        <p class="lede">Boxing's gear list is short compared to most contact sports — every item is there to either protect a fighter or let them train harder without breaking down.</p>
+      </div>
+      <dl class="gear-list">
+        <dt>Gloves</dt>
+        <dd>Padded to protect a fighter's hands as much as their opponent's face; weight ranges from 8oz in lighter pro divisions up to 16oz for sparring and training.</dd>
+        <dt>Hand wraps</dt>
+        <dd>Long strips of cloth wound around the knuckles and wrist under the gloves, stabilising the many small bones in the hand against repeated impact.</dd>
+        <dt>Mouthguard</dt>
+        <dd>A moulded piece worn over the teeth, required at every level to absorb shock and reduce the risk of jaw injury.</dd>
+        <dt>Headgear</dt>
+        <dd>Worn in sparring and most amateur bouts to reduce cuts and impact, though most professional fights are contested without it.</dd>
+        <dt>Ring &amp; canvas</dt>
+        <dd>A raised platform with a padded canvas floor and three or four ropes, sized so fighters have room to work angles rather than simply trade in a corner.</dd>
+      </dl>
+    </div>
+    <div>
+      <img src="https://images.unsplash.com/photo-1670768457987-f78bc97df50c?auto=format&fit=crop&w=900&q=80" alt="A pair of red boxing gloves hanging from a hook in a gym">
+    </div>
+  </div>
+</section>
+
+<section class="today" id="today">
+  <div class="wrap">
+    <div class="section-head">
+      <span class="tag" style="color:#e08a8a;">TODAY</span>
+      <h2>Where the sport lives now</h2>
+    </div>
+    <div class="today-grid">
+      <div class="today-row">
+        <div class="t-name">Sanctioning bodies</div>
+        <div class="t-detail">Four major organisations — the WBC, WBA, IBF, and WBO — each award their own world titles by division, which is why boxing often has several "champions" in one weight class until a unification bout settles it.</div>
+      </div>
+      <div class="today-row">
+        <div class="t-name">Olympic &amp; amateur boxing</div>
+        <div class="t-detail">Governed separately from the professional ranks, amateur boxing uses shorter bouts, protective headgear in most competitions, and computerised scoring, serving as the entry point for most fighters who later turn professional.</div>
+      </div>
+      <div class="today-row">
+        <div class="t-name">Gym culture</div>
+        <div class="t-detail">Away from world titles, boxing gyms remain one of the most common places people train for fitness, discipline, and stress relief, often with no intention of ever stepping into a competitive ring.</div>
+      </div>
+      <div class="today-row">
+        <div class="t-name">Women's boxing</div>
+        <div class="t-detail">Now a full part of the professional and Olympic calendar, with its own weight divisions, world titles, and a fast-growing following since its Olympic debut in 2012.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap footer-grid">
+    <div>
+      <div class="brand" style="font-family:'Bebas Neue',sans-serif; font-size:1.3rem; letter-spacing:0.03em;">THE SWEET SCIENCE</div>
+      <p style="max-width:280px; color:#6b5f4e;">An independent, informational guide to boxing — its history, rules, and technique.</p>
+    </div>
+    <div class="col">
+      <h4>ON THIS PAGE</h4>
+      <a href="#intro">The Sport</a>
+      <a href="#history">History</a>
+      <a href="#rounds">Rounds &amp; Weight</a>
+    </div>
+    <div class="col">
+      <h4>MORE</h4>
+      <a href="#punches">Punches</a>
+      <a href="#gear">Gear</a>
+      <a href="#today">Today</a>
+    </div>
+  </div>
+  <div class="wrap footer-bottom">
+    <span>Photography via Unsplash, used under the Unsplash License.</span>
+    <span>Built as an educational reference — not affiliated with the WBC, WBA, IBF, WBO, or any promotion.</span>
+  </div>
+</footer>
+
+</body>
+</html>
